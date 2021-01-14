@@ -8,11 +8,13 @@ import {
 import HomePage from "pages/HomePage";
 import LoginPage from "pages/LoginPage";
 import "assets/sass/global.scss";
+import AppNavBar from "components/navigation/AppNavBar";
 
 function App() {
   return (
     <>
       <Router>
+        <AppNavBar />
         <main className="main">
           <Switch>
             <Route exact path="/home" component={HomePage} />

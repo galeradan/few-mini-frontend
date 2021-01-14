@@ -20,9 +20,12 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
     <>
       <div className="card mt-2">
         <div className="card-body">
-          <h5>{blog.title}</h5>
-          <p>{blog.content}</p>
-          <p>{blog.status}</p>
+          <h5 className="mb-0">{blog.title}</h5>
+          <span className="d-flex justify-content-between">
+            <small>{blog.status}</small>
+            <small>{blog.createdAt}</small>
+          </span>
+          <p className="mt-3">{blog.content}</p>
           <span>Views: {blog.views}</span>
         </div>
       </div>

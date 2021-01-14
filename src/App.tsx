@@ -17,7 +17,7 @@ function App() {
           <Switch>
             <Route exact path="/home" component={HomePage} />
             <Route path="/login" component={LoginPage} />
-            <Redirect from="/" to="/login" />
+            <Redirect from="/" to="/home" />
           </Switch>
         </main>
       </Router>

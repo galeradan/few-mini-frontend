@@ -13,20 +13,23 @@ interface BlogCardProps {
 
 interface Props {
   blog: BlogCardProps;
+  colSize: string;
 }
 
-const BlogCard: React.FC<Props> = ({ blog }) => {
+const BlogCard: React.FC<Props> = ({ blog, colSize }) => {
   return (
     <>
-      <div className="card mt-2">
-        <div className="card-body">
-          <h5 className="mb-0">{blog.title}</h5>
-          <span className="d-flex justify-content-between">
-            <small>{blog.status}</small>
-            <small>{blog.createdAt}</small>
-          </span>
-          <p className="mt-3">{blog.content}</p>
-          <span>Views: {blog.views}</span>
+      <div className={colSize}>
+        <div className="card mt-2">
+          <div className="card-body">
+            <h5 className="mb-0">{blog.title}</h5>
+            <span className="d-flex justify-content-between">
+              <small>{blog.status}</small>
+              <small>{blog.createdAt}</small>
+            </span>
+            <p className="mt-3">{blog.content}</p>
+            <span>Views: {blog.views}</span>
+          </div>
         </div>
       </div>
     </>

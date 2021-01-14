@@ -72,11 +72,7 @@ const HomePage = () => {
         <div className="row">
           {blogsData &&
             blogsData.map((blog) => {
-              return (
-                <div className="col-md-4">
-                  <BlogCard blog={blog} />
-                </div>
-              );
+              return <BlogCard colSize="col-md-4" key={blog.id} blog={blog} />;
             })}
         </div>
       </div>

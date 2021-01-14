@@ -18,11 +18,13 @@ interface Props {
 const BlogCard: React.FC<Props> = ({ blog }) => {
   return (
     <>
-      <div>
-        <h5>{blog.title}</h5>
-        <p>{blog.content}</p>
-        <p>{blog.status}</p>
-        <span>Views: {blog.views}</span>
+      <div className="card mt-2">
+        <div className="card-body">
+          <h5>{blog.title}</h5>
+          <p>{blog.content}</p>
+          <p>{blog.status}</p>
+          <span>Views: {blog.views}</span>
+        </div>
       </div>
     </>
   );

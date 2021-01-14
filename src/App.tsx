@@ -5,9 +5,9 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import "assets/sass/global.scss";
 import HomePage from "pages/HomePage";
 import LoginPage from "pages/LoginPage";
-import "assets/sass/global.scss";
 import AppNavBar from "components/navigation/AppNavBar";
 
 function App() {

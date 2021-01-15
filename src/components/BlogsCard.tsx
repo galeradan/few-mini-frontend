@@ -1,7 +1,7 @@
 import React from "react";
 
 interface BlogCardProps {
-  id: number;
+  id: string;
   title: string;
   status: string;
   views: number;

@@ -1,11 +1,11 @@
 import { useLoginMutation } from "generated/graphql";
+import { setAccessToken } from "helper/accessToken";
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [login] = useLoginMutation();
 
   const loginAccount = (e: any) => {
@@ -17,7 +17,9 @@ const LoginPage = () => {
       },
     })
       .then((res) => {
-        console.log(res);
+        if (res && res.data) {
+          setAccessToken(res.data.login.accessToken || "");
+        }
       })
       .catch((err) => {
         console.log(err);

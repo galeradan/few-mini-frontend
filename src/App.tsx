@@ -5,11 +5,32 @@ import HomePage from "pages/HomePage";
 import LoginPage from "pages/LoginPage";
 import AppNavBar from "components/navigation/AppNavBar";
 
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  createHttpLink,
+  ApolloProvider,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { getAccessToken } from "helper/accessToken";
 
-const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: "http://localhost:3001/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const accessToken = getAccessToken();
+  return {
+    headers: {
+      ...headers,
+      authorization: accessToken ? `Bearer ${accessToken}` : "",
+    },
+  };
+});
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
+  credentials: "include",
 });
 
 function App() {

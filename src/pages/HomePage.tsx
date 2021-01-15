@@ -6,7 +6,10 @@ const HomePage = () => {
   const { loading, error, data } = useBlogsQuery();
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) {
+    console.log(error);
+    return <p>Error</p>;
+  }
 
   return (
     <>

@@ -6,7 +6,7 @@ const AppNavBar = () => {
   return (
     <>
       <Navbar className="custom-nav">
-        <Navbar.Brand as={Link} to="/home">
+        <Navbar.Brand as={Link} to="/">
           FEW: Mini Project
         </Navbar.Brand>
         <Nav className="ml-auto flex-row">

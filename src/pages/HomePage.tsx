@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BlogCard from "components/BlogsCard";
+import { gql, useQuery } from "@apollo/client";
 
 // Just for Testing Data and Props
 const blogsData = [
@@ -66,6 +67,26 @@ const blogsData = [
 ];
 
 const HomePage = () => {
+  const { loading, error, data } = useQuery(gql`
+    {
+      blogs {
+        id
+        title
+        views
+        status
+        publishedAt
+        content
+      }
+    }
+  `);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
   return (
     <>
       <div className="container pt-3">

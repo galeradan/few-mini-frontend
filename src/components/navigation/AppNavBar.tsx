@@ -19,16 +19,26 @@ const AppNavBar = () => {
         </Navbar.Brand>
         <Nav className="ml-auto flex-row">
           {!data ? (
-            <Nav.Link
-              as={Link}
-              activeClassName="active"
-              to="/login"
-              exact
-              className="mr-1"
-            >
-              {" "}
-              Login
-            </Nav.Link>
+            <>
+              <Nav.Link
+                as={Link}
+                activeClassName="active"
+                to="/register"
+                exact
+                className="mr-1"
+              >
+                Register
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                activeClassName="active"
+                to="/login"
+                exact
+                className="mr-1"
+              >
+                Login
+              </Nav.Link>
+            </>
           ) : (
             <Navbar.Text>{`${
               data.me.username

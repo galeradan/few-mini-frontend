@@ -1,17 +1,18 @@
 import { notify } from "components/notifications/Toast";
-import { useLoginMutation } from "generated/graphql";
-import { checkToken, setAccessToken } from "helper/accessToken";
+import { useRegisterMutation } from "generated/graphql";
+import { checkToken } from "helper/accessToken";
 import React, { useState, useEffect } from "react";
 
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [login] = useLoginMutation();
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [register] = useRegisterMutation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -25,27 +26,31 @@ const LoginPage = () => {
 
   const loginAccount = (e: any) => {
     e.preventDefault();
-    login({
-      variables: {
-        username,
-        password,
-      },
-      refetchQueries: ["Blogs", "Me"],
-    })
-      .then((res) => {
-        if (res && res.data) {
-          if (!res.data.login.error) {
-            setAccessToken(res.data.login.accessToken || "");
-            history.push("/");
-          } else {
-            const errors = res.data.login.error;
-            notify(errors[0].message);
-          }
-        }
+
+    if (password === confirmPassword) {
+      register({
+        variables: {
+          username,
+          password,
+          role: "admin",
+        },
       })
-      .catch(() => {
-        Swal.fire("Something went wrong", "Please try again", "error");
-      });
+        .then((res) => {
+          if (res && res.data) {
+            if (!res.data.register.error) {
+              history.push("/login");
+            } else {
+              const errors = res.data.register.error;
+              notify(errors[0].message);
+            }
+          }
+        })
+        .catch(() => {
+          Swal.fire("Something went wrong", "Please try again", "error");
+        });
+    } else {
+      notify("Passwords doesn't match");
+    }
   };
 
   return (
@@ -57,7 +62,7 @@ const LoginPage = () => {
               {!isLoggedIn ? (
                 <>
                   <h3 className="m-0">Welcome</h3>
-                  <small>Login your account here</small>
+                  <small>Register your account here</small>
                 </>
               ) : (
                 <>
@@ -71,9 +76,10 @@ const LoginPage = () => {
             </div>
             {!isLoggedIn && (
               <Form onSubmit={loginAccount}>
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group controlId="formBasicUsername">
                   <Form.Label>Username</Form.Label>
                   <Form.Control
+                    required
                     type="username"
                     placeholder="Enter username"
                     onChange={(e) => {
@@ -85,10 +91,22 @@ const LoginPage = () => {
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
+                    required
                     type="password"
                     placeholder="Password"
                     onChange={(e) => {
                       setPassword(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+                <Form.Group controlId="formBasicConfirmPassword">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control
+                    required
+                    type="password"
+                    placeholder="Confirm Password"
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
                     }}
                   />
                 </Form.Group>
@@ -103,4 +121,4 @@ const LoginPage = () => {
     </>
   );
 };
-export default LoginPage;
+export default RegisterPage;

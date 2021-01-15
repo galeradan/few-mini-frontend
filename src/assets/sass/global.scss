@@ -14,6 +14,7 @@
     box-shadow: 0px 0px 8px #00000029;
     border-radius: 10px;
     border: none;
+    width: 100%;
 }
 
 .custom-nav{
@@ -40,4 +41,12 @@
     .swal2-content{
         color: white !important;
     }
+}
+
+.title{
+    color: #0062cc;
+}
+
+.archived{
+    background-color: #f3f4f4;
 }

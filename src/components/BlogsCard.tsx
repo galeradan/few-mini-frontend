@@ -1,4 +1,5 @@
 import React from "react";
+import Moment from "react-moment";
 
 interface BlogCardProps {
   id: string;
@@ -19,16 +20,24 @@ interface Props {
 const BlogCard: React.FC<Props> = ({ blog, colSize }) => {
   return (
     <>
-      <div className={colSize}>
-        <div className="card mt-2">
+      <div className={`${colSize} d-flex align-items-stretch`}>
+        <div
+          className={`card mt-2 ${
+            blog.status === "archived" ? "archived" : ""
+          }`}
+        >
           <div className="card-body">
-            <h5 className="mb-0">{blog.title}</h5>
-            <span className="d-flex justify-content-between">
-              <small>{blog.status}</small>
-              <small>{blog.publishedAt}</small>
-            </span>
+            <h5 className="mb-0 title">{blog.title}</h5>
+            <small>{`${blog.status.replace(/\b\w/g, (l) =>
+              l.toUpperCase()
+            )}`}</small>
             <p className="mt-3">{blog.content}</p>
-            <span>Views: {blog.views}</span>
+            <span className="d-flex flex-row">
+              <small>{`${blog.views} views `}</small>
+              <small>
+                • <Moment fromNow>{blog.publishedAt}</Moment>
+              </small>
+            </span>
           </div>
         </div>
       </div>

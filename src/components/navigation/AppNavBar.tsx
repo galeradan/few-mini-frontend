@@ -13,8 +13,15 @@ const AppNavBar = () => {
         <Navbar.Brand as={Link} to="/">
           FEW
         </Navbar.Brand>
+        {data && (
+          <div className="d-flex flex-column">
+            <small>{data.me.username}</small>
+            <small>{data.me.role.toUpperCase()}</small>
+          </div>
+        )}
+
         <Nav className="ml-auto flex-row">
-          {!data ? (
+          {!data && (
             <>
               <Nav.Link
                 as={Link}
@@ -35,10 +42,6 @@ const AppNavBar = () => {
                 Login
               </Nav.Link>
             </>
-          ) : (
-            <Navbar.Text>{`${
-              data.me.username
-            } - ${data.me.role.toUpperCase()}`}</Navbar.Text>
           )}
           {data && (
             <Nav.Link

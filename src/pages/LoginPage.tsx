@@ -1,7 +1,29 @@
-import React from "react";
+import { useLoginMutation } from "generated/graphql";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const LoginPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [login] = useLoginMutation();
+
+  const loginAccount = (e: any) => {
+    e.preventDefault();
+    login({
+      variables: {
+        username,
+        password,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <div className="container pt-3">
@@ -11,15 +33,27 @@ const LoginPage = () => {
               <h3 className="m-0">Welcome</h3>
               <small>Login your account here</small>
             </div>
-            <Form>
+            <Form onSubmit={loginAccount}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Username</Form.Label>
-                <Form.Control type="username" placeholder="Enter username" />
+                <Form.Control
+                  type="username"
+                  placeholder="Enter username"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
               </Form.Group>
               <Button variant="primary" type="submit">
                 Submit

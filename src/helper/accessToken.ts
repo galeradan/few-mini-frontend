@@ -1,9 +1,16 @@
-let accessToken = "";
+// let accessToken = "";
 
 export const setAccessToken = (token: string) => {
-  accessToken = token;
+  localStorage.setItem(`token`, token);
 };
 
 export const getAccessToken = () => {
-  return accessToken;
+  return localStorage.getItem("token");
+};
+
+export const checkToken = () => {
+  if (localStorage.getItem("token")) {
+    return true;
+  }
+  return false;
 };

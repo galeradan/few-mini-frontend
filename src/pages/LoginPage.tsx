@@ -2,8 +2,10 @@ import { useLoginMutation } from "generated/graphql";
 import { setAccessToken } from "helper/accessToken";
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 const LoginPage = () => {
+  const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [login] = useLoginMutation();
@@ -15,10 +17,17 @@ const LoginPage = () => {
         username,
         password,
       },
+      refetchQueries: ["Blogs", "Me"],
     })
       .then((res) => {
         if (res && res.data) {
-          setAccessToken(res.data.login.accessToken || "");
+          if (!res.data.login.error) {
+            setAccessToken(res.data.login.accessToken || "");
+            history.push("/");
+          } else {
+            const errors = res.data.login.error;
+            alert(errors[0].message);
+          }
         }
       })
       .catch((err) => {

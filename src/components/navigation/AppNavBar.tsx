@@ -30,7 +30,9 @@ const AppNavBar = () => {
               Login
             </Nav.Link>
           ) : (
-            <Navbar.Text>{data.me.username}</Navbar.Text>
+            <Navbar.Text>{`${
+              data.me.username
+            } - ${data.me.role.toUpperCase()}`}</Navbar.Text>
           )}
           {data && (
             <Nav.Link

@@ -1,14 +1,24 @@
 import React from "react";
 import BlogCard from "components/BlogsCard";
 import { useBlogsQuery } from "generated/graphql";
+import Swal from "sweetalert2";
 
 const HomePage = () => {
   const { loading, error, data } = useBlogsQuery();
 
   if (loading) return <p>Loading...</p>;
+
   if (error) {
-    console.log(error);
-    return <p>Error</p>;
+    Swal.fire(
+      error.message,
+      "It seems you are not yet authorized, Login again?",
+      "question"
+    ).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        window.location.reload(false);
+      }
+    });
   }
 
   return (

@@ -13,6 +13,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { getAccessToken } from "helper/accessToken";
+import ProtectedRoute from "routes/ProtectedRoute";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3001/graphql",
@@ -41,8 +42,8 @@ function App() {
           <AppNavBar />
           <main className="main">
             <Switch>
-              <Route exact path="/" component={HomePage} />
               <Route path="/login" component={LoginPage} />
+              <ProtectedRoute path="/" component={HomePage} />
             </Switch>
           </main>
         </Router>

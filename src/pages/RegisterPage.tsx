@@ -12,6 +12,7 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [register] = useRegisterMutation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -26,13 +27,18 @@ const RegisterPage = () => {
 
   const loginAccount = (e: any) => {
     e.preventDefault();
-
+    let role = "";
+    if (isAdmin) {
+      role = "admin";
+    } else {
+      role = "member";
+    }
     if (password === confirmPassword) {
       register({
         variables: {
           username,
           password,
-          role: "admin",
+          role,
         },
       })
         .then((res) => {
@@ -107,6 +113,16 @@ const RegisterPage = () => {
                     placeholder="Confirm Password"
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+                <Form.Group id="formGridCheckbox">
+                  <Form.Check
+                    type="checkbox"
+                    label="Admin? uncheck if member"
+                    checked={isAdmin}
+                    onChange={() => {
+                      setIsAdmin(!isAdmin);
                     }}
                   />
                 </Form.Group>

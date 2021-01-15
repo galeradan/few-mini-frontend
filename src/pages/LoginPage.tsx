@@ -1,6 +1,6 @@
 import { notify } from "components/notifications/Toast";
 import { useLoginMutation } from "generated/graphql";
-import { checkToken, setAccessToken } from "helper/accessToken";
+import { checkToken, removeToken, setAccessToken } from "helper/accessToken";
 import React, { useState, useEffect } from "react";
 
 import { Form, Button } from "react-bootstrap";
@@ -17,11 +17,6 @@ const LoginPage = () => {
   useEffect(() => {
     setIsLoggedIn(checkToken());
   }, []);
-
-  const onLogout = () => {
-    localStorage.removeItem("token");
-    window.location.reload(false);
-  };
 
   const loginAccount = (e: any) => {
     e.preventDefault();
@@ -50,7 +45,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="container pt-3">
+      <div className="container">
         <div className="row m-0 justify-content-center">
           <div className="col-md-5 custom-form">
             <div className="form-title">
@@ -63,7 +58,11 @@ const LoginPage = () => {
                 <>
                   <h3 className="m-0">Welcome Back</h3>
                   <small>It seems you are already logged in</small>
-                  <Button variant="primary" type="submit" onClick={onLogout}>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={() => removeToken()}
+                  >
                     Logout?
                   </Button>
                 </>

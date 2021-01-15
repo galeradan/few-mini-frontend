@@ -2,20 +2,16 @@ import React from "react";
 import { NavLink as Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import { useMeQuery } from "generated/graphql";
+import { removeToken } from "helper/accessToken";
 
 const AppNavBar = () => {
   const { data } = useMeQuery();
 
-  const onLogout = () => {
-    localStorage.removeItem("token");
-    window.location.reload(false);
-  };
-
   return (
     <>
-      <Navbar className="custom-nav">
+      <Navbar className="custom-nav" fixed="top">
         <Navbar.Brand as={Link} to="/">
-          FEW: Mini Project
+          FEW
         </Navbar.Brand>
         <Nav className="ml-auto flex-row">
           {!data ? (
@@ -50,7 +46,7 @@ const AppNavBar = () => {
               activeClassName="active"
               to="/logout"
               className=""
-              onClick={() => onLogout()}
+              onClick={() => removeToken()}
             >
               Logout
             </Nav.Link>

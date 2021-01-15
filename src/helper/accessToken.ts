@@ -14,3 +14,10 @@ export const checkToken = () => {
   }
   return false;
 };
+
+export const removeToken = () => {
+  if (localStorage.getItem("token")) {
+    localStorage.removeItem("token");
+    window.location.reload(false);
+  }
+};

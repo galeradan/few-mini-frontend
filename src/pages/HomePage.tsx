@@ -2,6 +2,7 @@ import React from "react";
 import BlogCard from "components/BlogsCard";
 import { useBlogsQuery } from "generated/graphql";
 import Swal from "sweetalert2";
+import { removeToken } from "helper/accessToken";
 
 const HomePage = () => {
   const { loading, error, data } = useBlogsQuery();
@@ -15,19 +16,20 @@ const HomePage = () => {
       "question"
     ).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem("token");
-        window.location.reload(false);
+        removeToken();
       }
     });
   }
 
   return (
     <>
-      <div className="container pt-3">
+      <div className="container">
+        <h5>Blogs</h5>
+        <hr />
         <div className="row">
           {data &&
             data.blogs.map((blog) => {
-              return <BlogCard colSize="col-md-4" key={blog.id} blog={blog} />;
+              return <BlogCard colSize="col-md-6" key={blog.id} blog={blog} />;
             })}
         </div>
       </div>

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink as Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
-import { useMeQuery } from "generated/graphql";
 import { removeToken } from "helper/accessToken";
+import { UserContext } from "contexts/UserContext";
 
 const AppNavBar = () => {
-  const { data } = useMeQuery();
+  const { user } = useContext(UserContext);
 
   return (
     <>
@@ -13,15 +13,15 @@ const AppNavBar = () => {
         <Navbar.Brand as={Link} to="/">
           FEW
         </Navbar.Brand>
-        {data && (
+        {user.id !== "" && (
           <div className="d-flex flex-column">
-            <small>{data.me.username}</small>
-            <small>{data.me.role.toUpperCase()}</small>
+            <small>{user.username}</small>
+            <small>{user.role.toUpperCase()}</small>
           </div>
         )}
 
         <Nav className="ml-auto flex-row">
-          {!data && (
+          {user.id === "" && (
             <>
               <Nav.Link
                 as={Link}
@@ -43,7 +43,7 @@ const AppNavBar = () => {
               </Nav.Link>
             </>
           )}
-          {data && (
+          {user.id !== "" && (
             <Nav.Link
               as={Link}
               activeClassName="active"

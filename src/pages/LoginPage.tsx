@@ -1,13 +1,15 @@
 import { notify } from "components/notifications/Toast";
+import { initialState, UserContext } from "contexts/UserContext";
 import { useLoginMutation } from "generated/graphql";
 import { checkToken, removeToken, setAccessToken } from "helper/accessToken";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
+  const { setUser } = useContext(UserContext);
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +18,10 @@ const LoginPage = () => {
 
   useEffect(() => {
     setIsLoggedIn(checkToken());
-  }, []);
+    if (!checkToken()) {
+      setUser(initialState.user);
+    }
+  }, [setUser]);
 
   const loginAccount = (e: any) => {
     e.preventDefault();
@@ -31,6 +36,7 @@ const LoginPage = () => {
         if (res && res.data) {
           if (!res.data.login.error) {
             setAccessToken(res.data.login.accessToken || "");
+            setUser(res.data.login.user || initialState.user);
             notify("Login Successful", "notify-success");
             history.push("/");
           } else {

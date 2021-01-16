@@ -31,10 +31,11 @@ const LoginPage = () => {
         if (res && res.data) {
           if (!res.data.login.error) {
             setAccessToken(res.data.login.accessToken || "");
+            notify("Login Successful", "notify-success");
             history.push("/");
           } else {
             const errors = res.data.login.error;
-            notify(errors[0].message);
+            notify(errors[0].message, "notify-error");
           }
         }
       })

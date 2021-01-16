@@ -4,6 +4,11 @@ mutation Login($username: String! $password: String!){
     password: $password
   }){
   	accessToken
+    user{
+      id
+      username
+      role
+    }
     error{
       field
       message

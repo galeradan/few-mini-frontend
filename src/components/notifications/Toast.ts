@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const notify = (message: string) => {
+export const notify = (message: string, type: string) => {
   Swal.fire({
     text: message,
     toast: true,
@@ -8,7 +8,7 @@ export const notify = (message: string) => {
     showConfirmButton: false,
     timer: 1500,
     customClass: {
-      container: "swal-container-error",
+      container: `${type}`,
     },
   });
 };

@@ -39,10 +39,11 @@ const RegisterPage = () => {
         .then((res) => {
           if (res && res.data) {
             if (!res.data.register.error) {
+              notify("Successfully Registered, Please Login", "notify-success");
               history.push("/login");
             } else {
               const errors = res.data.register.error;
-              notify(errors[0].message);
+              notify(errors[0].message, "notify-error");
             }
           }
         })
@@ -50,7 +51,7 @@ const RegisterPage = () => {
           Swal.fire("Something went wrong", "Please try again", "error");
         });
     } else {
-      notify("Passwords doesn't match");
+      notify("Passwords doesn't match", "notify-error");
     }
   };
 

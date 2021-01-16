@@ -36,12 +36,29 @@
     }
 }
 
-.swal2-popup.swal2-toast{
-    background-color: rgb(199, 53, 53) !important;
-    .swal2-content{
-        color: white !important;
+.swal2-container.swal2-top-right{
+    top: 60px !important; 
+}
+
+
+.notify-error{
+    .swal2-popup.swal2-toast{
+        background-color: rgb(199, 53, 53);
+        .swal2-content{
+            color: white;
+        }
     }
 }
+
+.notify-success{
+    .swal2-popup.swal2-toast{
+        background-color: #28a745 !important;
+        .swal2-content{
+            color: white;
+        }
+    }
+}
+
 
 .title{
     color: #0062cc;

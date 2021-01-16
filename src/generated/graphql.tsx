@@ -51,6 +51,7 @@ export type LoginResponse = {
   __typename?: "LoginResponse";
   error?: Maybe<Array<FieldError>>;
   accessToken?: Maybe<Scalars["String"]>;
+  user?: Maybe<User>;
 };
 
 export type Query = {
@@ -106,6 +107,9 @@ export type LoginMutation = { __typename?: "Mutation" } & {
     LoginResponse,
     "accessToken"
   > & {
+      user?: Maybe<
+        { __typename?: "User" } & Pick<User, "id" | "username" | "role">
+      >;
       error?: Maybe<
         Array<
           { __typename?: "FieldError" } & Pick<FieldError, "field" | "message">
@@ -193,6 +197,11 @@ export const LoginDocument = gql`
   mutation Login($username: String!, $password: String!) {
     login(account: { username: $username, password: $password }) {
       accessToken
+      user {
+        id
+        username
+        role
+      }
       error {
         field
         message

@@ -16,8 +16,6 @@ export const checkToken = () => {
 };
 
 export const removeToken = () => {
-  if (localStorage.getItem("token")) {
-    localStorage.removeItem("token");
-    window.location.reload(false);
-  }
+  localStorage.removeItem("token");
+  window.location.reload();
 };

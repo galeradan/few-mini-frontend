@@ -1,4 +1,4 @@
-// Handles the token 
+// Handles the token
 
 export const setAccessToken = (token: string) => {
   localStorage.setItem(`token`, token);

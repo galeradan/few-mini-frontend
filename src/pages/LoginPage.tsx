@@ -17,12 +17,14 @@ const LoginPage = () => {
   const [login] = useLoginMutation();
   const [isLoading, setIsLoading] = useState(false);
 
+  // handles user context based on availability of token
   useEffect(() => {
     if (!checkToken()) {
       setUser(initialState.user);
     }
   }, [setUser]);
 
+  // function that handles login mutation
   const loginAccount = (e: any) => {
     e.preventDefault();
     setIsLoading(true);

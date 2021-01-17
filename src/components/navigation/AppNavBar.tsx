@@ -5,6 +5,7 @@ import { removeToken } from "helper/accessToken";
 import { UserContext } from "contexts/UserContext";
 
 const AppNavBar = () => {
+  // gets the user context which contains current user details
   const { user } = useContext(UserContext);
 
   return (

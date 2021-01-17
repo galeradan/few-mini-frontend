@@ -13,7 +13,7 @@ export const initialState: UserProvider = {
     role: "",
   },
   setUser: (): void => {
-    throw new Error("setContext function must be overridden");
+    throw new Error("setUser function must be overridden");
   },
 };
 

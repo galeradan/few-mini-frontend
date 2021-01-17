@@ -18,6 +18,7 @@ interface Props {
 }
 
 const BlogCard: React.FC<Props> = ({ blog, colSize }) => {
+  // This is a simple component for each blog data
   return (
     <>
       <div className={`${colSize} d-flex align-items-stretch`}>

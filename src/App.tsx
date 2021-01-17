@@ -22,6 +22,7 @@ function App() {
     role: "",
   });
 
+  // retrieves Me details of the authenticated user once context is changed
   const [getUser, { data }] = useMeLazyQuery();
 
   useEffect(() => {

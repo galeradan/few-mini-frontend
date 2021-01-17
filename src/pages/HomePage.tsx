@@ -6,7 +6,9 @@ import { removeToken } from "helper/accessToken";
 import ReactLoading from "react-loading";
 
 const HomePage = () => {
+  // fetches blogs data
   const { loading, error, data } = useBlogsQuery();
+  // if something went wrong or not authenticated, notify and reload page
   if (error) {
     Swal.fire(
       error.message,

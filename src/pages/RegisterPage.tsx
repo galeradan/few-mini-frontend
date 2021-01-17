@@ -15,15 +15,18 @@ const RegisterPage = () => {
   const [register] = useRegisterMutation();
   const [isLoading, setIsLoading] = useState(false);
 
-  const loginAccount = (e: any) => {
+  // function that handles registration of account
+  const registerAccount = (e: any) => {
     e.preventDefault();
     setIsLoading(true);
+    // set's the role of the user based on checkbox, can be refactored by doing a Role entity and attach to user
     let role = "";
     if (isAdmin) {
       role = "admin";
     } else {
       role = "member";
     }
+    // validates user password, hashing is done via backend using argon2
     if (password === confirmPassword) {
       register({
         variables: {
@@ -68,7 +71,7 @@ const RegisterPage = () => {
             <small className="d-inline-block mb-3 text-muted few-sub-title">
               Already have an account? <Link to="/login">Login here</Link>
             </small>
-            <Form onSubmit={loginAccount} className="few-form-group">
+            <Form onSubmit={registerAccount} className="few-form-group">
               <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control

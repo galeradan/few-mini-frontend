@@ -1,11 +1,12 @@
 import { notify } from "components/notifications/Toast";
 import { initialState, UserContext } from "contexts/UserContext";
 import { useLoginMutation } from "generated/graphql";
-import { checkToken, removeToken, setAccessToken } from "helper/accessToken";
+import { checkToken, setAccessToken } from "helper/accessToken";
 import React, { useState, useEffect, useContext } from "react";
 
 import { Form, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import ReactLoading from "react-loading";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
@@ -14,10 +15,9 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [login] = useLoginMutation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoggedIn(checkToken());
     if (!checkToken()) {
       setUser(initialState.user);
     }
@@ -25,6 +25,7 @@ const LoginPage = () => {
 
   const loginAccount = (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
     login({
       variables: {
         username,
@@ -34,6 +35,7 @@ const LoginPage = () => {
     })
       .then((res) => {
         if (res && res.data) {
+          setIsLoading(false);
           if (!res.data.login.error) {
             setAccessToken(res.data.login.accessToken || "");
             setUser(res.data.login.user || initialState.user);
@@ -46,6 +48,7 @@ const LoginPage = () => {
         }
       })
       .catch(() => {
+        setIsLoading(false);
         Swal.fire("Something went wrong", "Please try again", "error");
       });
   };
@@ -56,53 +59,50 @@ const LoginPage = () => {
         <div className="row m-0 justify-content-center">
           <div className="col-md-5 custom-form">
             <div className="form-title">
-              {!isLoggedIn ? (
-                <>
-                  <h3 className="m-0">Welcome</h3>
-                  <small>Login your account here</small>
-                </>
-              ) : (
-                <>
-                  <h3 className="m-0">Welcome Back</h3>
-                  <small>It seems you are already logged in</small>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={() => removeToken()}
-                  >
-                    Logout?
-                  </Button>
-                </>
-              )}
+              <>
+                <h3 className="m-0">Welcome</h3>
+                <small>Login your account here</small>
+              </>
             </div>
-            {!isLoggedIn && (
-              <Form onSubmit={loginAccount}>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control
-                    type="username"
-                    placeholder="Enter username"
-                    onChange={(e) => {
-                      setUsername(e.target.value);
-                    }}
-                  />
-                </Form.Group>
+            <small className="d-inline-block mb-3 text-muted few-sub-title">
+              Don&apos;t have an account?{" "}
+              <Link to="/register">Register here</Link>
+            </small>
+            <Form onSubmit={loginAccount} className="few-form-group">
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="username"
+                  placeholder="Enter username"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
+              </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </Form.Group>
+              <Button type="submit" className="few-btn">
+                {isLoading ? (
+                  <ReactLoading
+                    type="balls"
+                    className="few-loader"
+                    height="100%"
+                    width="15px"
                   />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
-              </Form>
-            )}
+                ) : (
+                  "Login"
+                )}
+              </Button>
+            </Form>
           </div>
         </div>
       </div>

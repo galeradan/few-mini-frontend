@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
 @import '~bootstrap/scss/bootstrap.scss';
+@import './variable.scss';
 
 * {
     font-family: 'Noto Sans', sans-serif;
@@ -34,6 +35,14 @@
         flex-direction: column;
         align-items: center;
     }
+
+    .few-form-group > *:last-child{
+        margin-top: 30px;
+    }
+
+    a{
+        text-decoration: none;
+    }
 }
 
 .swal2-container.swal2-top-right{
@@ -43,18 +52,18 @@
 
 .notify-error{
     .swal2-popup.swal2-toast{
-        background-color: rgb(199, 53, 53);
+        background-color: $bg-danger;
         .swal2-content{
-            color: white;
+            color: $color-light;
         }
     }
 }
 
 .notify-success{
     .swal2-popup.swal2-toast{
-        background-color: #28a745 !important;
+        background-color: $bg-success;
         .swal2-content{
-            color: white;
+            color: $color-light;
         }
     }
 }
@@ -71,4 +80,34 @@
 .container{
     padding-top: 100px;
     padding-bottom: 40px;
+}
+
+.few-btn{
+    width: 100%;
+    background-color: $secondary;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+
+    &>*{
+        color: $color-light;
+    }
+}
+
+.few-btn:active{
+    background-color: $primary !important;
+}
+
+.few-btn:hover{
+    background-color: $primary;
+}
+
+.few-btn:focus{
+    background-color: $primary;
+}
+
+.btn:focus {
+    box-shadow: none !important;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import "assets/sass/global.scss";
 import HomePage from "pages/HomePage";
 import LoginPage from "pages/LoginPage";
@@ -11,6 +11,7 @@ import "moment-timezone";
 import { initialState, UserContext } from "contexts/UserContext";
 import { useMeLazyQuery, User } from "generated/graphql";
 import { checkToken } from "helper/accessToken";
+import GuessRoute from "routes/GuestRoute";
 
 Moment.globalTimezone = "Asia/Manila";
 
@@ -40,8 +41,8 @@ function App() {
           <AppNavBar />
           <main className="main">
             <Switch>
-              <Route path="/login" component={LoginPage} />
-              <Route path="/register" component={RegisterPage} />
+              <GuessRoute path="/login" component={LoginPage} />
+              <GuessRoute path="/register" component={RegisterPage} />
               <ProtectedRoute path="/" component={HomePage} />
             </Switch>
           </main>

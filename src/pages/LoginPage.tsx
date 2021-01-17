@@ -92,7 +92,7 @@ const LoginPage = () => {
                   }}
                 />
               </Form.Group>
-              <Button type="submit" className="few-btn">
+              <Button type="submit" className="few-btn" disabled={isLoading}>
                 {isLoading ? (
                   <ReactLoading
                     type="balls"

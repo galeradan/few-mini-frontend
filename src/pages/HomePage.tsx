@@ -40,12 +40,17 @@ const HomePage = () => {
             <h5>Blogs</h5>
             <hr />
             <div className="row">
-              {data &&
+              {data && data.blogs.length !== 0 ? (
                 data.blogs.map((blog) => {
                   return (
                     <BlogCard colSize="col-md-6" key={blog.id} blog={blog} />
                   );
-                })}
+                })
+              ) : (
+                <div className="col-md-12">
+                  <p>No blogs available.</p>
+                </div>
+              )}
             </div>
           </>
         )}

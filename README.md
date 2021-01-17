@@ -29,5 +29,7 @@ $ yarn
 ## Running the app
 Once the above steps are okay, let's run the app
 ```bash
-# development
+# Fix lint errors first, there might be some prettier warnings/errors after cloning
+$ yarn lint:fix
+# then run
 $ yarn start
